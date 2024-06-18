@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "801808886503",
+    "project_id": "atienrollmentapp",
+    "storage_bucket": "atienrollmentapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:801808886503:android:af0fd794ebb871930e1042",
+        "android_client_info": {
+          "package_name": "com.ati.atienrollmentapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmrloheMcTTSQNKcfHlELuR2swESuCpfs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
