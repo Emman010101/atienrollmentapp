@@ -11,9 +11,10 @@ import 'package:atienrollmentapp/widgets/lrnreturning_picker.dart';
 import 'package:atienrollmentapp/widgets/shs_field.dart';
 import 'package:atienrollmentapp/widgets/yes_or_no_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
+import '../classes/database.dart';
+import '../globalvars/globalvars.dart';
 import '../widgets/address_picker.dart';
 import '../widgets/permanent_address.dart';
 
@@ -29,56 +30,8 @@ class _HighschoolEnrollmentFormState extends State<HighschoolEnrollmentForm> {
   final _formKey = GlobalKey<FormState>();
   Color textColor = Colors.black;
   Color buttonColor = Colors.black;
-  bool isLoading = false;
   //
-  String gradeLevelToEnroll = '';
-  String withLrn = '';
-  String balikAral = '';
-  String psaBirthCertNo = '';
-  String lrn = '';
-  String lastName = '';
-  String firstName = '';
-  String middleName = '';
-  String extensionName = '';
-  String birthDate = '';
-  String pRegion = '';
-  String pProvince = '';
-  String pMunicipality = '';
-  String gender = '';
-  String age = '';
-  String motherTongue = '';
-  String indigenousPeople = '';
-  String fourPsBeneficiary = '';
-  String cRegion = '';
-  String cProvince = '';
-  String cMunicipality = '';
-  String cBarangay = '';
-  String cZipCode = '';
-  String cStreetName = '';
-  String cHouseNoStreet = '';
-  String sameWithCurrentAddress = '';
-  String perRegion = '';
-  String perProvince = '';
-  String perMunicipality = '';
-  String perBarangay = '';
-  String perZipCode = '';
-  String perStreetName = '';
-  String perHouseNoStreet = '';
-  String fatherLastName = '';
-  String fatherFirstName = '';
-  String fatherMiddleName = '';
-  String fatherContactNum = '';
-  String motherLastName = '';
-  String motherFirstName = '';
-  String motherMiddleName = '';
-  String motherContactNum = '';
-  String lastGradeLevelCompleted = '';
-  String lastSchoolYearCompleted = '';
-  String lastSchoolAttended = '';
-  String lastSchoolID = '';
-  String semester = '';
-  String track = '';
-  String strand = '';
+
 
   GenderSelection genderSelection =
       GenderSelection(title: "Select your gender");
@@ -107,8 +60,6 @@ class _HighschoolEnrollmentFormState extends State<HighschoolEnrollmentForm> {
   // Format the date if necessary
   String year = DateFormat('yyyy').format(DateTime.now());
 
-  String schoolYear = '';
-
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
         context: context,
@@ -122,65 +73,6 @@ class _HighschoolEnrollmentFormState extends State<HighschoolEnrollmentForm> {
       });
     }
   }
-  //ip for emulator 10.0.2.2
-  var url = Uri.http("192.168.1.29", "atienrollmentsystemapi/enroll.php");
-  //var url = Uri.http("${Env.URL_PREFIX}/enroll.php");
-  // Http post request to enroll the student
-  Future _enrollStudent() async {
-    return await http.post(
-      url,
-      body: {
-        "gradeLevelToEnroll": gradeLevelToEnroll,
-        "withLrn": withLrn,
-        "balikAral": balikAral,
-        "psaBirthCertNo": psaBirthCertNo,
-        "lrn": lrn,
-        "lastName": lastName,
-        "firstName": firstName,
-        "middleName": middleName,
-        "extensionName": extensionName,
-        "birthDate": birthDate,
-        "pRegion": pRegion,
-        "pProvince": pProvince,
-        "pMunicipality": pMunicipality,
-        "gender": gender,
-        "age": age,
-        "motherTongue": motherTongue,
-        "indigenousPeople": indigenousPeople,
-        "fourPsBeneficiary": fourPsBeneficiary,
-        "cRegion": cRegion,
-        "cProvince": cProvince,
-        "cMunicipality": cMunicipality,
-        "cBarangay": cBarangay,
-        "cZipCode": cZipCode,
-        "cStreetName": cStreetName,
-        "cHouseNoStreet": cHouseNoStreet,
-        "sameWithCurrentAddress": sameWithCurrentAddress,
-        "perRegion": perRegion,
-        "perProvince": perProvince,
-        "perMunicipality": perMunicipality,
-        "perBarangay": perBarangay,
-        "perZipCode": perZipCode,
-        "perStreetName": perStreetName,
-        "perHouseNoStreet": perHouseNoStreet,
-        "fatherLastName": fatherLastName,
-        "fatherFirstName": fatherFirstName,
-        "fatherMiddleName": fatherMiddleName,
-        "fatherContactNum": fatherContactNum,
-        "motherLastName": motherLastName,
-        "motherFirstName": motherFirstName,
-        "motherMiddleName": motherMiddleName,
-        "motherContactNum": motherContactNum,
-        "lastGradeLevelCompleted": lastGradeLevelCompleted,
-        "lastSchoolYearCompleted": lastSchoolYearCompleted,
-        "lastSchoolAttended": lastSchoolAttended,
-        "lastSchoolID": lastSchoolID,
-        "semester": semester,
-        "track": track,
-        "strand": strand,
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -192,11 +84,6 @@ class _HighschoolEnrollmentFormState extends State<HighschoolEnrollmentForm> {
         bottom: false,
         child: Stack(
           children: [
-            isLoading
-                ? const Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : SizedBox(),
             SingleChildScrollView(
               reverse: true,
               child: Column(
@@ -752,9 +639,6 @@ class _HighschoolEnrollmentFormState extends State<HighschoolEnrollmentForm> {
                                       semester = shsField.getSemester ?? '';
                                       track = shsField.getTrack ?? '';
                                       strand = shsField.getStrand ?? '';
-                                      setState(() {
-                                        isLoading = true;
-                                      });
                                       //timer to stop circular progress indicator widget when there's a problem with http request
                                       // Timer? _timer;
                                       // int sec = 0;
@@ -772,35 +656,7 @@ class _HighschoolEnrollmentFormState extends State<HighschoolEnrollmentForm> {
                                       //         _timer?.cancel();
                                       //       }
                                       //     });
-                                      try {
-                                        var enroll = await _enrollStudent();
-
-                                        // JSON string
-                                        String jsonString =
-                                            enroll.body.toString();
-
-                                        // Decode JSON string
-                                        Map<String, dynamic> jsonObject =
-                                            jsonDecode(jsonString);
-
-                                        // Access the value
-                                        bool success = jsonObject['success'];
-
-                                        // Print the value
-                                        print('Success: $success');
-                                        //print("Student Enrolled!!!" + enroll);
-                                        setState(() {
-                                          isLoading = false;
-                                        });
                                         changeScreen(context, CameraScreen());
-                                      } catch (e) {
-                                        print(e);
-                                        snackBar(context,
-                                            'Something went wrong. Please check your internet connection.');
-                                        setState(() {
-                                          isLoading = false;
-                                        });
-                                      }
                                     }else{
                                       snackBar(context, "Please ensure that all required fields are filled.");
                                     }

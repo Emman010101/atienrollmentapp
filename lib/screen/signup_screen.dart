@@ -1,6 +1,11 @@
+import 'package:atienrollmentapp/functions/change_screen.dart';
+import 'package:atienrollmentapp/functions/snackbar.dart';
+import 'package:atienrollmentapp/screen/highschool_enrollment_form.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+
+import '../globalvars/globalvars.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -55,18 +60,11 @@ class _SignupScreenState extends State<SignupScreen> {
               onPressed: () async {
                 User? user = await _signInWithGoogle();
                 if (user != null) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                          'Sign in successful! Welcome, ${user.displayName}'),
-                    ),
-                  );
+                  email = user.email.toString();
+                  snackBar(context, 'Welcome, ${user.displayName}');
+                  changeScreen(context, HighschoolEnrollmentForm());
                 } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('Sign in failed.'),
-                    ),
-                  );
+                  snackBar(context, 'Sign in failed.');
                 }
               },
               child: Row(

@@ -14,15 +14,15 @@ class AddressPickerWidget extends StatefulWidget {
   AddressPickerWidget({super.key, required this.title, required this.showBarangay});
 
   get getRegion{
-    return region.toString();
+    return region?.regionName;
   }
 
   get getProvince{
-    return province.toString();
+    return province?.name;
   }
 
   get getMunicipality{
-    return municipality.toString();
+    return municipality?.name;
   }
 
   get getBarangay{
