@@ -4,10 +4,14 @@ import '../globalvars/globalvars.dart';
 
 class Database {
   //ip for emulator 10.0.2.2
-  var url = Uri.http("10.0.2.2", "atienrollmentsystemapi/enroll.php");
-  //var url = Uri.http("${Env.URL_PREFIX}/enroll.php");
+  //String ip = "192.168.1.29";
+  String ip = '10.0.2.2';
+
   // Http post request to enroll the student
   Future enrollStudent() async {
+
+    var url = Uri.http(ip, "atienrollmentsystemapi/enroll.php");
+    //var url = Uri.http("${Env.URL_PREFIX}/enroll.php");
     return await http.post(
       url,
       body: {
@@ -64,4 +68,16 @@ class Database {
       },
     );
   }
+
+
+  Future checkEmailIfUsed(email) async {
+    var url = Uri.http(ip, "atienrollmentsystemapi/checkEmailIfUsed.php");
+    return await http.post(
+      url,
+      body: {
+        "checkEmailIfUsed" : email,
+      }
+    );
+  }
+
 }

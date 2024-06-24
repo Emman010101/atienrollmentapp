@@ -1,6 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:atienrollmentapp/functions/change_screen.dart';
+import 'package:atienrollmentapp/functions/close_screen.dart';
+import 'package:atienrollmentapp/screen/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -16,10 +19,10 @@ class DisplayPictureScreen extends StatefulWidget {
 }
 
 class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
-    bool isLoading = false;
     Database db = Database();
 
     return Scaffold(
@@ -29,7 +32,9 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
         child: Row(
           children: [
             FloatingActionButton(
-              onPressed: () {},
+              onPressed: () {
+                closeScreen(context);
+              },
               backgroundColor: Colors.red,
               child: const Icon(FontAwesomeIcons.x),
             ),
@@ -59,17 +64,16 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
                   // Print the value
                   print('Success: $success');
                   //print("Student Enrolled!!!" + enroll);
-                  setState(() {
-                    isLoading = false;
-                  });
+                  snackBar(context, "Success.");
+                  changeScreen(context, SignupScreen());
                 } catch (e) {
                   print("Error $e");
                   snackBar(context,
                       'Something went wrong. Please check your internet connection.');
-                  setState(() {
-                    isLoading = false;
-                  });
                 }
+                setState(() {
+                  isLoading = false;
+                });
               },
               backgroundColor: Colors.green,
               child: const Icon(FontAwesomeIcons.check),

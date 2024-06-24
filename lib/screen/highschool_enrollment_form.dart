@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:atienrollmentapp/functions/change_screen.dart';
+import 'package:atienrollmentapp/functions/close_screen.dart';
 import 'package:atienrollmentapp/functions/snackbar.dart';
 import 'package:atienrollmentapp/functions/textfield_decoration.dart';
 import 'package:atienrollmentapp/screen/camera_screen.dart';
@@ -10,10 +11,12 @@ import 'package:atienrollmentapp/widgets/gender_picker.dart';
 import 'package:atienrollmentapp/widgets/lrnreturning_picker.dart';
 import 'package:atienrollmentapp/widgets/shs_field.dart';
 import 'package:atienrollmentapp/widgets/yes_or_no_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../classes/database.dart';
+import '../functions/is_user_enrolled.dart';
 import '../globalvars/globalvars.dart';
 import '../widgets/address_picker.dart';
 import '../widgets/permanent_address.dart';
@@ -77,6 +80,7 @@ class _HighschoolEnrollmentFormState extends State<HighschoolEnrollmentForm> {
   @override
   Widget build(BuildContext context) {
     //print(year + '-' + (int.parse(year)+1).toString());
+    //print(_isUserEnrolled());
     schoolYear = '$year-${int.parse(year) + 1}';
     return Scaffold(
       resizeToAvoidBottomInset: false,
