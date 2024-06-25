@@ -9,6 +9,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../classes/database.dart';
 import '../functions/snackbar.dart';
+import '../globalvars/globalvars.dart';
 
 class DisplayPictureScreen extends StatefulWidget {
   final String imagePath;
@@ -46,26 +47,26 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
                   isLoading = true;
                 });
                 try {
-                  var enroll = await db.enrollStudent();
-
-                  // JSON string
-                  String jsonString =
-                  enroll.body.toString();
-
-                  print("JSON BODY: $jsonString");
-
-                  // Decode JSON string
-                  Map<String, dynamic> jsonObject =
-                  jsonDecode(jsonString);
-
-                  // Access the value
-                  bool success = jsonObject['success'];
-
-                  // Print the value
-                  print('Success: $success');
+                  var enroll = await db.enrollStudent(file: File(widget.imagePath),filename: email+".jpeg");
+                  print("Status Code: $enroll");
+                  // // JSON string
+                  // String jsonString =
+                  // enroll.body.toString();
+                  //
+                  // print("JSON BODY: $jsonString");
+                  //
+                  // // Decode JSON string
+                  // Map<String, dynamic> jsonObject =
+                  // jsonDecode(jsonString);
+                  //
+                  // // Access the value
+                  // bool success = jsonObject['success'];
+                  //
+                  // // Print the value
+                  // print('Success: $success');
                   //print("Student Enrolled!!!" + enroll);
                   snackBar(context, "Success.");
-                  changeScreen(context, SignupScreen());
+                  //changeScreen(context, SignupScreen());
                 } catch (e) {
                   print("Error $e");
                   snackBar(context,

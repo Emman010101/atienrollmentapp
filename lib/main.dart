@@ -38,8 +38,8 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
           textTheme: Theme.of(context).textTheme.apply(
-            bodyColor: Colors.red,
-            displayColor: Colors.red,
+            bodyColor: Colors.black,
+            displayColor: Colors.black,
           )),
       //home: HighschoolEnrollmentForm(),
       home: SignupScreen(),

@@ -18,4 +18,5 @@ Future isUserEnrolled() async {
   if (response.toString() != 'false') {
     return true;
   }
+  return false;
 }
